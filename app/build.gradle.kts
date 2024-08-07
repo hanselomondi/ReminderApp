@@ -71,10 +71,12 @@ dependencies {
 
     // Viewmodel lifecycle
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     // Dagger-Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Room
     implementation(libs.androidx.room.runtime)
@@ -83,4 +85,7 @@ dependencies {
 
     // Arrow
     implementation(libs.arrow.core)
+
+    // Icons-Extended
+    implementation(libs.androidx.material.icons.extended)
 }
