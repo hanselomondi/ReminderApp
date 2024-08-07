@@ -2,11 +2,12 @@ package com.example.remindme.reminder.data.local
 
 import androidx.room.TypeConverter
 import com.example.remindme.reminder.domain.model.ReminderPriority
+import java.util.Locale
 
 class Converters {
     @TypeConverter
     fun toReminderPriority(value: String): ReminderPriority {
-        return ReminderPriority.valueOf(value) // Returns the enum constant with the specified name
+        return ReminderPriority.valueOf(value.uppercase(Locale.getDefault())) // Returns the enum constant with the specified name
     }
 
     @TypeConverter
