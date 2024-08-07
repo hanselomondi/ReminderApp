@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.remindme.reminder.domain.model.ReminderPriority
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,7 +20,7 @@ interface ReminderDao {
     fun getAllReminders(): Flow<List<ReminderEntity>>
 
     @Query("SELECT * FROM reminder_table WHERE id = :id")
-    fun getReminderById(id: Int): ReminderEntity?
+    suspend fun getReminderById(id: Int): ReminderEntity?
 
     @Query("SELECT * FROM reminder_table ORDER BY dueDate ASC")
     fun getRemindersSortedByDate(): Flow<List<ReminderEntity>>
@@ -32,4 +33,7 @@ interface ReminderDao {
 
     @Query("SELECT * FROM reminder_table WHERE isCompleted = 1")
     fun getCompletedReminders(): Flow<List<ReminderEntity>>
+
+    @Query("SELECT * FROM reminder_table WHERE priority = :priority")
+    fun getRemindersByPriority(priority: ReminderPriority): Flow<List<ReminderEntity>>
 }
