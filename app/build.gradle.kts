@@ -88,4 +88,7 @@ dependencies {
 
     // Icons-Extended
     implementation(libs.androidx.material.icons.extended)
+
+    // DateTime dialog
+    implementation(libs.datetime)
 }
