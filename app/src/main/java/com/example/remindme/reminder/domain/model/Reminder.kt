@@ -1,6 +1,7 @@
 package com.example.remindme.reminder.domain.model
 
 data class Reminder(
+    val id: Int = 0,
     val title: String,
     val description: String? = null,
     val dueDate: Long,
