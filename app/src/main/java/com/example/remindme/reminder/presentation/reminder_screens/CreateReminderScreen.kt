@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -19,8 +21,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -64,7 +68,7 @@ fun CreateReminderScreen(
         onTimeChange = newReminderViewModel::onDueTimeChange,
         onCancelClicked = {
             navController.popBackStack(
-                route = ScreenNames.HomeScreen.title,
+                route = ScreenNames.HomeScreen.name,
                 inclusive = false
             )
         },
@@ -111,6 +115,7 @@ fun CreateReminderContent(
         val dateDialogState = rememberMaterialDialogState()
         val timeDialogState = rememberMaterialDialogState()
         val context = LocalContext.current
+        val keyboardController = LocalSoftwareKeyboardController.current
 
         Box(modifier = Modifier.padding(innerPadding)) {
             Column(
@@ -128,6 +133,9 @@ fun CreateReminderContent(
                             style = MaterialTheme.typography.bodyMedium
                         )
                     },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Next
+                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
@@ -140,6 +148,12 @@ fun CreateReminderContent(
                             style = MaterialTheme.typography.bodyMedium
                         )
                     },
+                    keyboardOptions = KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onDone = { keyboardController?.hide() }
+                    ),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.extra_small_padding)))
