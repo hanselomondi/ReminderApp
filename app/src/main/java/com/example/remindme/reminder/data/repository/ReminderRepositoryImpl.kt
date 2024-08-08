@@ -60,4 +60,8 @@ class ReminderRepositoryImpl @Inject constructor(
             reminders.map { it.toReminder() }
         }
     }
+
+    override suspend fun updateReminderStatus(id: Int, isCompleted: Boolean) {
+        reminderDao.updateReminderStatus(id, isCompleted)
+    }
 }
