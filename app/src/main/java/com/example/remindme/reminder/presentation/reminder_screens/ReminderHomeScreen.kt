@@ -11,7 +11,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.NavHostController
+import com.example.remindme.R
 import com.example.remindme.reminder.presentation.reminder_screens.components.EmptyScreen
 import com.example.remindme.reminder.presentation.reminder_screens.components.LoadingScreen
 import com.example.remindme.reminder.presentation.reminder_screens.components.ReminderListScreen
@@ -55,7 +57,9 @@ fun ReminderHomeScreen(
                 }
                 is ReminderViewState.Success -> {
                     ReminderListScreen(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(dimensionResource(R.dimen.medium_padding)),
                         reminders = reminderState.reminders
                     )
                 }
