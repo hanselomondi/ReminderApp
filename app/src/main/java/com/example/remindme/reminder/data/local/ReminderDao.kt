@@ -36,4 +36,7 @@ interface ReminderDao {
 
     @Query("SELECT * FROM reminder_table WHERE priority = :priority")
     fun getRemindersByPriority(priority: ReminderPriority): Flow<List<ReminderEntity>>
+
+    @Query("UPDATE reminder_table SET isCompleted = :isCompleted WHERE id = :id")
+    suspend fun updateReminderStatus(id: Int, isCompleted: Boolean)
 }
