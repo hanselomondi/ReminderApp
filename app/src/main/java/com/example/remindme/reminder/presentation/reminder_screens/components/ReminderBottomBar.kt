@@ -8,11 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.CheckCircleOutline
-import androidx.compose.material.icons.outlined.Checklist
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,15 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.remindme.R
-import com.example.remindme.util.Constants
+import com.example.remindme.ui.theme.RemindMeTheme
 import com.example.remindme.util.ScreenNames
 
 @Composable
 fun ReminderBottomBar(
     modifier: Modifier = Modifier,
     currentScreen: ScreenNames,
-    homeScreenState: Constants,
     onHomeClicked: () -> Unit,
     onCompletedClicked: () -> Unit
 ) {
@@ -42,12 +42,12 @@ fun ReminderBottomBar(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             BottomRowItem(
-                icon = if (homeScreenState == Constants.INCOMPLETE_REMINDERS) Icons.Filled.Home else Icons.Outlined.Home,
+                icon = if (currentScreen == ScreenNames.HomeScreen) Icons.Filled.Home else Icons.Outlined.Home,
                 label = stringResource(R.string.home),
                 onIconClicked = { onHomeClicked() }
             )
             BottomRowItem(
-                icon = if (homeScreenState == Constants.COMPLETED_REMINDERS) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
+                icon = if (currentScreen == ScreenNames.CompletedRemindersScreen) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
                 label = stringResource(R.string.completed),
                 onIconClicked = { onCompletedClicked() }
             )
@@ -63,22 +63,47 @@ fun BottomRowItem(
     label: String,
     onIconClicked: () -> Unit
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        IconButton(
-            onClick = onIconClicked
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = label
+    BadgedBox(badge = {}, modifier = modifier) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            IconButton(
+                onClick = onIconClicked
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = label
+                )
+            }
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodySmall
             )
         }
-        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.extra_small_padding)))
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall
+    }
+}
+
+
+@Preview(name = "BottomRowItemDark", showBackground = true)
+@Composable
+private fun BottomRowItemDarkPreview() {
+    RemindMeTheme(darkTheme =  true) {
+        BottomRowItem(
+            icon = Icons.Filled.Home,
+            label = "Home",
+            onIconClicked = {}
+        )
+    }
+}
+
+
+@Preview(name = "BottomRowItemLight", showBackground = true)
+@Composable
+private fun BottomRowItemLightPreview() {
+    RemindMeTheme(darkTheme =  true) {
+        BottomRowItem(
+            icon = Icons.Filled.Home,
+            label = "Home",
+            onIconClicked = {}
         )
     }
 }
