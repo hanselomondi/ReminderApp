@@ -3,7 +3,6 @@ package com.example.remindme.reminder.presentation.reminder_screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.remindme.reminder.domain.repository.ReminderRepository
-import com.example.remindme.util.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,15 +14,11 @@ import javax.inject.Inject
 class ReminderViewModel @Inject constructor(
     private val reminderRepository: ReminderRepository
 ): ViewModel() {
-    private val _reminderState = MutableStateFlow<ReminderViewState>(ReminderViewState.Loading)
-    val reminderState: StateFlow<ReminderViewState> = _reminderState.asStateFlow()
+    private val _completeReminderState = MutableStateFlow<ReminderViewState>(ReminderViewState.Loading)
+    val completeReminderState: StateFlow<ReminderViewState> = _completeReminderState.asStateFlow()
 
-    /**
-     * StateFlow to determine whether the user is viewing Completed or Incomplete reminders
-     * while still in the HomeScreen
-     */
-    private val _homeScreenState = MutableStateFlow(Constants.INCOMPLETE_REMINDERS)
-    val homeScreenState: StateFlow<Constants> = _homeScreenState.asStateFlow()
+    private val _incompleteReminderState = MutableStateFlow<ReminderViewState>(ReminderViewState.Loading)
+    val incompleteReminderState: StateFlow<ReminderViewState> = _incompleteReminderState.asStateFlow()
 
     init {
         getIncompleteReminders()
@@ -32,9 +27,9 @@ class ReminderViewModel @Inject constructor(
     private fun getAllReminders() = viewModelScope.launch {
         reminderRepository.getAllReminders().collect { reminders ->
             if (reminders.isEmpty()) {
-                _reminderState.value = ReminderViewState.Empty
+                _incompleteReminderState.value = ReminderViewState.Empty
             } else {
-                _reminderState.value = ReminderViewState.Success(reminders)
+                _incompleteReminderState.value = ReminderViewState.Success(reminders)
             }
         }
     }
@@ -42,9 +37,9 @@ class ReminderViewModel @Inject constructor(
     fun getIncompleteReminders() = viewModelScope.launch {
         reminderRepository.getIncompleteReminders().collect { reminders ->
             if (reminders.isEmpty()) {
-                _reminderState.value = ReminderViewState.Empty
+                _incompleteReminderState.value = ReminderViewState.Empty
             } else {
-                _reminderState.value = ReminderViewState.Success(reminders)
+                _incompleteReminderState.value = ReminderViewState.Success(reminders)
             }
         }
     }
@@ -52,18 +47,14 @@ class ReminderViewModel @Inject constructor(
     fun getCompletedReminders() = viewModelScope.launch {
         reminderRepository.getCompletedReminders().collect { reminders ->
             if (reminders.isEmpty()) {
-                _reminderState.value = ReminderViewState.Empty
+                _completeReminderState.value = ReminderViewState.Empty
             } else {
-                _reminderState.value = ReminderViewState.Success(reminders)
+                _completeReminderState.value = ReminderViewState.Success(reminders)
             }
         }
     }
 
     fun onReminderButtonClicked(reminderId: Int, isCompleted: Boolean) = viewModelScope.launch {
         reminderRepository.updateReminderStatus(reminderId, isCompleted)
-    }
-
-    fun onHomeScreenStateChanged(homeScreenState: Constants) {
-        _homeScreenState.value = homeScreenState
     }
 }
