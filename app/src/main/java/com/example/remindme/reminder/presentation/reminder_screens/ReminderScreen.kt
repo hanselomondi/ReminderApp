@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.remindme.util.Constants
 import com.example.remindme.util.ScreenNames
 
 @Composable
@@ -19,8 +18,8 @@ fun ReminderScreen(
     viewModel: ReminderViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    val reminderState by viewModel.reminderState.collectAsStateWithLifecycle()
-    val homeScreenState by viewModel.homeScreenState.collectAsStateWithLifecycle()
+    val inCompleteReminderState by viewModel.incompleteReminderState.collectAsStateWithLifecycle()
+    val completeReminderState by viewModel.completeReminderState.collectAsStateWithLifecycle()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = ScreenNames.valueOf(
@@ -34,17 +33,32 @@ fun ReminderScreen(
         composable(route = ScreenNames.HomeScreen.name) {
             ReminderHomeScreen(
                 modifier = modifier,
-                reminderState = reminderState,
-                navController = navController,
+                inCompleteReminderState = inCompleteReminderState,
+                onFabClicked = { navController.navigate(route = ScreenNames.NewReminderScreen.name) },
                 currentScreen = currentScreen,
-                homeScreenState = homeScreenState,
                 onButtonClicked = viewModel::onReminderButtonClicked,
                 onHomeClicked = {
-                    viewModel.onHomeScreenStateChanged(homeScreenState = Constants.INCOMPLETE_REMINDERS)
                     viewModel.getIncompleteReminders()
                 },
                 onCompletedClicked = {
-                    viewModel.onHomeScreenStateChanged(homeScreenState = Constants.COMPLETED_REMINDERS)
+                    navController.navigate(route = ScreenNames.CompletedRemindersScreen.name)
+                    viewModel.getCompletedReminders()
+                }
+            )
+        }
+
+        composable(route = ScreenNames.CompletedRemindersScreen.name) {
+            CompletedReminderScreen(
+                modifier = modifier,
+                completeReminderState = completeReminderState,
+                onFabClicked = { navController.navigate(route = ScreenNames.NewReminderScreen.name) },
+                currentScreen = currentScreen,
+                onButtonClicked = viewModel::onReminderButtonClicked,
+                onHomeClicked = {
+                    navController.navigate(route = ScreenNames.HomeScreen.name)
+                    viewModel.getIncompleteReminders()
+                },
+                onCompletedClicked = {
                     viewModel.getCompletedReminders()
                 }
             )
