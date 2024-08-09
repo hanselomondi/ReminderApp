@@ -83,6 +83,32 @@ fun BottomRowItem(
 }
 
 
+@Preview(name = "BottomBarDark", showBackground = true)
+@Composable
+private fun BottomBarDarkPreview() {
+    RemindMeTheme(darkTheme = true) {
+        ReminderBottomBar(
+            currentScreen = ScreenNames.HomeScreen,
+            onHomeClicked = {},
+            onCompletedClicked = {}
+        )
+    }
+}
+
+
+@Preview(name = "BottomBarLight", showBackground = true)
+@Composable
+private fun BottomBarLightPreview() {
+    RemindMeTheme(darkTheme = false) {
+        ReminderBottomBar(
+            currentScreen = ScreenNames.HomeScreen,
+            onHomeClicked = {},
+            onCompletedClicked = {}
+        )
+    }
+}
+
+
 @Preview(name = "BottomRowItemDark", showBackground = true)
 @Composable
 private fun BottomRowItemDarkPreview() {
