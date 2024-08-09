@@ -17,4 +17,6 @@
 
     <string name="home">Home</string>
     <string name="completed">Completed</string>
+
+    <string name="screen_view_state_error_message">Unknown Error</string>
 </resources>
