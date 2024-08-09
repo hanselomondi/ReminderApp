@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.outlined.CheckCircleOutline
 import androidx.compose.material.icons.outlined.Checklist
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.BottomAppBar
@@ -22,14 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
 import com.example.remindme.R
+import com.example.remindme.util.Constants
 import com.example.remindme.util.ScreenNames
 
 @Composable
 fun ReminderBottomBar(
     modifier: Modifier = Modifier,
     currentScreen: ScreenNames,
+    homeScreenState: Constants,
     onHomeClicked: () -> Unit,
     onCompletedClicked: () -> Unit
 ) {
@@ -39,12 +42,12 @@ fun ReminderBottomBar(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             BottomRowItem(
-                icon = if (currentScreen == ScreenNames.HomeScreen) Icons.Filled.Home else Icons.Outlined.Home,
+                icon = if (homeScreenState == Constants.INCOMPLETE_REMINDERS) Icons.Filled.Home else Icons.Outlined.Home,
                 label = stringResource(R.string.home),
                 onIconClicked = { onHomeClicked() }
             )
             BottomRowItem(
-                icon = if (currentScreen == ScreenNames.NewReminderScreen) Icons.Filled.Checklist else Icons.Outlined.Checklist,
+                icon = if (homeScreenState == Constants.COMPLETED_REMINDERS) Icons.Filled.CheckCircle else Icons.Outlined.CheckCircleOutline,
                 label = stringResource(R.string.completed),
                 onIconClicked = { onCompletedClicked() }
             )

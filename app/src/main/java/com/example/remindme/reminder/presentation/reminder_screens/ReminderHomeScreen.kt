@@ -16,8 +16,10 @@ import androidx.navigation.NavHostController
 import com.example.remindme.R
 import com.example.remindme.reminder.presentation.reminder_screens.components.EmptyScreen
 import com.example.remindme.reminder.presentation.reminder_screens.components.LoadingScreen
+import com.example.remindme.reminder.presentation.reminder_screens.components.ReminderBottomBar
 import com.example.remindme.reminder.presentation.reminder_screens.components.ReminderListScreen
 import com.example.remindme.reminder.presentation.reminder_screens.components.ReminderTopBar
+import com.example.remindme.util.Constants
 import com.example.remindme.util.ScreenNames
 
 
@@ -26,11 +28,22 @@ fun ReminderHomeScreen(
     reminderState: ReminderViewState,
     navController: NavHostController,
     currentScreen: ScreenNames,
+    homeScreenState: Constants,
+    onButtonClicked: (Int, Boolean) -> Unit,
+    onHomeClicked: () -> Unit,
+    onCompletedClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = { ReminderTopBar(currentScreen = currentScreen) },
-        bottomBar = {},
+        bottomBar = {
+            ReminderBottomBar(
+                currentScreen = currentScreen,
+                homeScreenState = homeScreenState,
+                onHomeClicked = onHomeClicked,
+                onCompletedClicked = onCompletedClicked
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -60,7 +73,8 @@ fun ReminderHomeScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(dimensionResource(R.dimen.medium_padding)),
-                        reminders = reminderState.reminders
+                        reminders = reminderState.reminders,
+                        onButtonClicked = onButtonClicked
                     )
                 }
                 is ReminderViewState.Error -> {

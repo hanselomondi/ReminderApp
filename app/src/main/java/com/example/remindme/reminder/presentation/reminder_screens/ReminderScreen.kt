@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.remindme.util.Constants
 import com.example.remindme.util.ScreenNames
 
 @Composable
@@ -19,6 +20,7 @@ fun ReminderScreen(
     navController: NavHostController = rememberNavController()
 ) {
     val reminderState by viewModel.reminderState.collectAsStateWithLifecycle()
+    val homeScreenState by viewModel.homeScreenState.collectAsStateWithLifecycle()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = ScreenNames.valueOf(
@@ -34,7 +36,17 @@ fun ReminderScreen(
                 modifier = modifier,
                 reminderState = reminderState,
                 navController = navController,
-                currentScreen = currentScreen
+                currentScreen = currentScreen,
+                homeScreenState = homeScreenState,
+                onButtonClicked = viewModel::onReminderButtonClicked,
+                onHomeClicked = {
+                    viewModel.onHomeScreenStateChanged(homeScreenState = Constants.INCOMPLETE_REMINDERS)
+                    viewModel.getIncompleteReminders()
+                },
+                onCompletedClicked = {
+                    viewModel.onHomeScreenStateChanged(homeScreenState = Constants.COMPLETED_REMINDERS)
+                    viewModel.getCompletedReminders()
+                }
             )
         }
 

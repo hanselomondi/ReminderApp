@@ -14,7 +14,8 @@ import com.example.remindme.reminder.domain.model.Reminder
 @Composable
 fun ReminderListScreen(
     modifier: Modifier = Modifier,
-    reminders: List<Reminder>
+    reminders: List<Reminder>,
+    onButtonClicked: (Int, Boolean) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(reminders) { reminder ->
@@ -22,7 +23,7 @@ fun ReminderListScreen(
                 title = reminder.title,
                 description = reminder.description,
                 dueDateTime = "reminder.dueDate",
-                onButtonClicked = {},
+                onButtonClicked = { onButtonClicked(reminder.id, !reminder.isCompleted) },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_padding)))
