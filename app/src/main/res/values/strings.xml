@@ -14,4 +14,7 @@
     <string name="date_button_label">Pick Date</string>
     <string name="time_button_label">Pick Time</string>
     <string name="save_button">Save</string>
+
+    <string name="home">Home</string>
+    <string name="completed">Completed</string>
 </resources>
