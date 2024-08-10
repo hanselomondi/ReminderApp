@@ -35,7 +35,6 @@ import com.example.remindme.reminder.presentation.reminder_screens.components.Cr
 import com.example.remindme.reminder.presentation.reminder_screens.components.ReminderTopBar
 import com.example.remindme.util.ScreenNames
 import com.example.remindme.util.toDateString
-import com.example.remindme.util.toEpochMilli
 import com.example.remindme.util.toLocalDate
 import com.example.remindme.util.toLocalTime
 import com.example.remindme.util.toTimeString
@@ -66,12 +65,7 @@ fun CreateReminderScreen(
         onDateChange = newReminderViewModel::onDueDateChange,
         dueTime = newReminderState.dueTime,
         onTimeChange = newReminderViewModel::onDueTimeChange,
-        onCancelClicked = {
-            navController.popBackStack(
-                route = ScreenNames.HomeScreen.name,
-                inclusive = false
-            )
-        },
+        onCancelClicked = { navController.navigateUp() },
         onSaveClicked = {
             val newReminder = Reminder(
                 title = newReminderState.title,
