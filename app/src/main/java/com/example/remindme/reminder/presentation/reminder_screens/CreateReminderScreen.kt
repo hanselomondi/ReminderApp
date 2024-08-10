@@ -17,8 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -101,10 +99,10 @@ fun CreateReminderContent(
         topBar = { ReminderTopBar(currentScreen = currentScreen) }
     ) { innerPadding ->
         // Format the current date into a string
-        val formattedDate by remember { mutableStateOf(dueDate.toDateString()) }
+        val formattedDate = dueDate.toDateString()
 
         // Format the current time into a string
-        val formattedTime by remember { mutableStateOf(dueTime!!.toTimeString()) }
+        val formattedTime = dueTime!!.toTimeString()
 
         val dateDialogState = rememberMaterialDialogState()
         val timeDialogState = rememberMaterialDialogState()
@@ -240,7 +238,7 @@ fun CreateReminderContent(
         ) {
             timepicker(
                 title = stringResource(id = R.string.time_picker_title),
-                initialTime = dueTime?.toLocalTime() ?: LocalTime.now(),
+                initialTime = dueTime.toLocalTime(),
                 onTimeChange = { onTimeChange(it) }
             )
         }
