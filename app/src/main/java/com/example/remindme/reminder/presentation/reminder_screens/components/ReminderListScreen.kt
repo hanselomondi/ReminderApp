@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import com.example.remindme.R
 import com.example.remindme.reminder.domain.model.Reminder
+import com.example.remindme.util.toFriendlyDateTimeString
 
 @Composable
 fun ReminderListScreen(
@@ -22,7 +23,7 @@ fun ReminderListScreen(
             ReminderCard(
                 title = reminder.title,
                 description = reminder.description,
-                dueDateTime = "reminder.dueDate",
+                dueDateTime = reminder.dueDate.toFriendlyDateTimeString(reminder.dueTime ?: 0L),
                 onButtonClicked = { onButtonClicked(reminder.id, !reminder.isCompleted) },
                 isCompleted = reminder.isCompleted,
                 modifier = Modifier.fillMaxWidth()

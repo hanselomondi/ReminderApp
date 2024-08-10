@@ -32,3 +32,18 @@ fun Long.toLocalTime(zoneId: ZoneId = ZoneId.systemDefault()): LocalTime {
         .atZone(zoneId)
         .toLocalTime()
 }
+
+fun Long.toFriendlyDateTimeString(dueTime: Long): String {
+    val now = LocalDate.now()
+    val dueDate = this.toLocalDate()
+    val time = dueTime.toTimeString()
+
+    return when {
+        dueDate.isEqual(now) -> "Today, $time"
+        dueDate.isEqual(now.plusDays(1)) -> "Tomorrow, $time"
+        else -> {
+            val dayOfWeekFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM")
+            "${dueDate.format(dayOfWeekFormatter)}, $time"
+        }
+    }
+}
