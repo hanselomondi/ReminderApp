@@ -53,7 +53,7 @@ fun HomeSubScreenContent(
                     ReminderListScreen(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(dimensionResource(R.dimen.medium_padding)),
+                            .padding(horizontal = dimensionResource(R.dimen.medium_padding)),
                         reminders = reminderState.reminders,
                         onButtonClicked = onButtonClicked
                     )
