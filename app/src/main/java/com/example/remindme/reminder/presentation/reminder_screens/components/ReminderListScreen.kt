@@ -24,6 +24,7 @@ fun ReminderListScreen(
                 description = reminder.description,
                 dueDateTime = "reminder.dueDate",
                 onButtonClicked = { onButtonClicked(reminder.id, !reminder.isCompleted) },
+                isCompleted = reminder.isCompleted,
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_padding)))

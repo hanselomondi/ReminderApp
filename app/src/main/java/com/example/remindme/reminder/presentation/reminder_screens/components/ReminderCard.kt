@@ -6,13 +6,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.DoneOutline
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.remindme.R
 import com.example.remindme.ui.theme.RemindMeTheme
@@ -23,31 +30,48 @@ fun ReminderCard(
     title: String,
     description: String?,
     dueDateTime: String,
+    isCompleted: Boolean,
     onButtonClicked: () -> Unit
 ) {
     Card(modifier = modifier) {
+        val textDecoration = if (isCompleted) TextDecoration.LineThrough else TextDecoration.None
+
         Row(
             modifier = Modifier.padding(dimensionResource(R.dimen.extra_small_padding))
         ) {
-            RadioButton(
-                selected = false,
-                onClick =  onButtonClicked
-            )
+            if (isCompleted) {
+                IconButton(
+                    onClick = onButtonClicked
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Done,
+                        contentDescription = null
+                    )
+                }
+            } else {
+                RadioButton(
+                    selected = false,
+                    onClick =  onButtonClicked
+                )
+            }
             Column(
                 modifier = Modifier.padding(dimensionResource(R.dimen.small_padding))
             ) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.bodyLarge,
+                    textDecoration = textDecoration
                 )
                 Text(
                     text = description ?: "",
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    textDecoration = textDecoration
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(R.dimen.small_padding)))
                 Text(
                     text = dueDateTime,
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
+                    textDecoration = textDecoration
                 )
             }
         }
@@ -64,6 +88,7 @@ private fun ReminderCardLightPreview() {
             description = "Description",
             dueDateTime = "DateTime",
             onButtonClicked = {},
+            isCompleted = false,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -79,6 +104,7 @@ private fun ReminderScreenDarkPreview() {
             description = "Description",
             dueDateTime = "DateTime",
             onButtonClicked = {},
+            isCompleted = true,
             modifier = Modifier.fillMaxWidth()
         )
     }
