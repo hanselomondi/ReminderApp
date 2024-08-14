@@ -64,4 +64,8 @@ class ReminderRepositoryImpl @Inject constructor(
     override suspend fun updateReminderStatus(id: Int, isCompleted: Boolean) {
         reminderDao.updateReminderStatus(id, isCompleted)
     }
+
+    override suspend fun deleteReminder(id: Int) {
+        reminderDao.deleteReminder(id)
+    }
 }

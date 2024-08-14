@@ -24,4 +24,6 @@ interface ReminderRepository {
     fun getCompletedReminders(): Flow<List<Reminder>>
 
     suspend fun updateReminderStatus(id: Int, isCompleted: Boolean)
+
+    suspend fun deleteReminder(id: Int)
 }
