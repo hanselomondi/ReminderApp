@@ -19,4 +19,9 @@
     <string name="completed">Completed</string>
 
     <string name="screen_view_state_error_message">Unknown Error</string>
+
+    <!-- Delete dialog -->
+    <string name="delete_prompt">Delete this reminder?</string>
+    <string name="confirm_button">OK</string>
+    <string name="delete_dialog_title">Delete</string>
 </resources>
