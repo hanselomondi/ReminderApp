@@ -13,7 +13,8 @@ fun CompletedReminderScreen(
     currentScreen: ScreenNames,
     onButtonClicked: (Int, Boolean) -> Unit,
     onHomeClicked: () -> Unit,
-    onCompletedClicked: () -> Unit
+    onCompletedClicked: () -> Unit,
+    onDeleteReminder: (Int) -> Unit
 ) {
     HomeSubScreenContent(
         currentScreen = currentScreen,
@@ -22,6 +23,7 @@ fun CompletedReminderScreen(
         onButtonClicked = onButtonClicked,
         onHomeClicked = onHomeClicked,
         onCompletedClicked = onCompletedClicked,
+        onDeleteReminder = onDeleteReminder,
         modifier = modifier
     )
 }

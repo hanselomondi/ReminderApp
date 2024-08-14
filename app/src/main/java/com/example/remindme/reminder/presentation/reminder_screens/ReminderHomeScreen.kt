@@ -14,6 +14,7 @@ fun ReminderHomeScreen(
     onButtonClicked: (Int, Boolean) -> Unit,
     onHomeClicked: () -> Unit,
     onCompletedClicked: () -> Unit,
+    onDeleteReminder: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     HomeSubScreenContent(
@@ -23,6 +24,7 @@ fun ReminderHomeScreen(
         onButtonClicked = onButtonClicked,
         onHomeClicked = onHomeClicked,
         onCompletedClicked = onCompletedClicked,
+        onDeleteReminder = onDeleteReminder,
         modifier = modifier,
     )
 }

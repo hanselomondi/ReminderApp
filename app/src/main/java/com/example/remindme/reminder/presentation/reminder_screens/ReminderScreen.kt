@@ -43,7 +43,8 @@ fun ReminderScreen(
                 onCompletedClicked = {
                     navController.navigate(route = ScreenNames.CompletedRemindersScreen.name)
                     viewModel.getCompletedReminders()
-                }
+                },
+                onDeleteReminder = viewModel::onDeleteReminder
             )
         }
 
@@ -60,7 +61,8 @@ fun ReminderScreen(
                 },
                 onCompletedClicked = {
                     viewModel.getCompletedReminders()
-                }
+                },
+                onDeleteReminder = viewModel::onDeleteReminder
             )
         }
 

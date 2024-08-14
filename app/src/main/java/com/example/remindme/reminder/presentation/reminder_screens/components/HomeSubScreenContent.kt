@@ -23,7 +23,8 @@ fun HomeSubScreenContent(
     onButtonClicked: (Int, Boolean) -> Unit,
     onFabClicked: () -> Unit,
     onHomeClicked: () -> Unit,
-    onCompletedClicked: () -> Unit
+    onCompletedClicked: () -> Unit,
+    onDeleteReminder: (Int) -> Unit
 ) {
     Scaffold(
         topBar = { ReminderTopBar(currentScreen = currentScreen) },
@@ -55,7 +56,8 @@ fun HomeSubScreenContent(
                             .fillMaxSize()
                             .padding(horizontal = dimensionResource(R.dimen.medium_padding)),
                         reminders = reminderState.reminders,
-                        onButtonClicked = onButtonClicked
+                        onButtonClicked = onButtonClicked,
+                        onDeleteReminder = onDeleteReminder
                     )
                 }
                 is ReminderViewState.Error -> {
@@ -86,7 +88,8 @@ private fun HomeSubScreenContentDarkPreview() {
             onButtonClicked = { _, _ -> },
             onFabClicked = {},
             onHomeClicked = {},
-            onCompletedClicked = {}
+            onCompletedClicked = {},
+            onDeleteReminder = {}
         )
     }
 }
@@ -102,7 +105,8 @@ private fun HomeSubScreenContentLightPreview() {
             onButtonClicked = { _, _ -> },
             onFabClicked = {},
             onHomeClicked = {},
-            onCompletedClicked = {}
+            onCompletedClicked = {},
+            onDeleteReminder = {}
         )
     }
 }

@@ -57,4 +57,8 @@ class ReminderViewModel @Inject constructor(
     fun onReminderButtonClicked(reminderId: Int, isCompleted: Boolean) = viewModelScope.launch {
         reminderRepository.updateReminderStatus(reminderId, isCompleted)
     }
+
+    fun onDeleteReminder(reminderId: Int) = viewModelScope.launch {
+        reminderRepository.deleteReminder(reminderId)
+    }
 }

@@ -16,7 +16,8 @@ import com.example.remindme.util.toFriendlyDateTimeString
 fun ReminderListScreen(
     modifier: Modifier = Modifier,
     reminders: List<Reminder>,
-    onButtonClicked: (Int, Boolean) -> Unit
+    onButtonClicked: (Int, Boolean) -> Unit,
+    onDeleteReminder: (Int) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         items(reminders) { reminder ->
@@ -25,6 +26,7 @@ fun ReminderListScreen(
                 description = reminder.description,
                 dueDateTime = reminder.dueDate.toFriendlyDateTimeString(reminder.dueTime ?: 0L),
                 onButtonClicked = { onButtonClicked(reminder.id, !reminder.isCompleted) },
+                onDeleteReminder = { onDeleteReminder(reminder.id) },
                 isCompleted = reminder.isCompleted,
                 modifier = Modifier.fillMaxWidth()
             )
