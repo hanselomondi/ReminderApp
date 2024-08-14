@@ -39,4 +39,7 @@ interface ReminderDao {
 
     @Query("UPDATE reminder_table SET isCompleted = :isCompleted WHERE id = :id")
     suspend fun updateReminderStatus(id: Int, isCompleted: Boolean)
+
+    @Query("DELETE FROM reminder_table WHERE id = :id")
+    suspend fun deleteReminder(id: Int)
 }
